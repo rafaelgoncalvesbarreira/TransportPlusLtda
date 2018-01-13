@@ -23,7 +23,7 @@ namespace TransportPlusLtda.Controllers.Api
             return new PositionViewModel
             {
                 Id = Guid.NewGuid(),
-                Latitude = (random.NextDouble() * 2.0 - 1.0) * 90,
+                Latitude = (random.NextDouble() * 2.0 - 1.0) * 70,
                 Longitude = (random.NextDouble() * 2.0 - 1.0) * 180
             };
         }
