@@ -32,6 +32,19 @@ namespace TransportPlusLtda
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+
+                options.Lockout.AllowedForNewUsers = true;
+                options.SignIn.RequireConfirmedEmail = false;
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IVehicleService, VehicleService>();
@@ -40,7 +53,7 @@ namespace TransportPlusLtda
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -56,6 +69,9 @@ namespace TransportPlusLtda
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            DatabaseSeed.SeedUsers(userManager);
+            DatabaseSeed.SeedVehicles(context);
 
             app.UseMvc(routes =>
             {

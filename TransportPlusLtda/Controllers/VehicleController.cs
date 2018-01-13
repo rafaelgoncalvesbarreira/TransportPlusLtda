@@ -22,20 +22,7 @@ namespace TransportPlusLtda.Controllers
 
         public IActionResult Index()
         {
-            var list = new List<Vehicle>();
-            list.Add(new Vehicle
-            {
-                Id = 1,
-                GpsId = Guid.Parse("5a16662f-a28f-424f-8c3f-2e662704ee29"),
-                Name = "Vehicle secure #23"
-            });
-            list.Add(new Vehicle
-            {
-                Id = 1,
-                GpsId = Guid.Parse("4f46fd87-d029-4b55-8c83-b0425a61b7b0"),
-                Name = "oil truck #332"
-            });
-            var models = (from v in list
+            var models = (from v in service.GetAll()
                           select new VehicleViewModel
                           {
                               Id = v.Id,
