@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TransportPlusLtda.Models;
+using TransportPlusLtda.Data.Entities;
 
 namespace TransportPlusLtda.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Vehicle> VehicleItems{ get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
